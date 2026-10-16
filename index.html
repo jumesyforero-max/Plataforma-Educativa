@@ -425,7 +425,38 @@ body:has(#loginView:not(.hidden)) main { width:100% !important; max-width:none !
       body:has(#loginView:not(.hidden)) .login-card { width: min(440px, 100%); }
     }
 
-  </style>
+  
+/* Navegación superior persistente y vista a pantalla completa */
+html,body{width:100%;min-height:100%;margin:0}
+#app,.app,.app-shell,.dashboard-shell,#dashContent{width:100%;max-width:none}
+.portal-shell{display:flex!important;flex-direction:column!important;width:100%;max-width:none;min-height:calc(100vh - 20px);margin:0;border-radius:0;overflow:visible;gap:0}
+.portal-topline{order:0;width:100%;box-sizing:border-box;padding:14px 22px!important;margin:0!important;border-bottom:1px solid #e9e7fb;background:rgba(255,255,255,.72);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);position:relative;z-index:5}
+.portal-top-actions{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap}
+.portal-top-actions .btn{white-space:nowrap}
+.portal-sidebar{order:1;width:100%;box-sizing:border-box;flex-direction:row!important;align-items:center;gap:8px;min-width:0;padding:10px 16px!important;overflow-x:auto!important;overflow-y:hidden!important;border-radius:0!important;position:sticky;top:0;z-index:4;box-shadow:0 5px 18px rgba(45,39,140,.12)}
+.portal-sidebar-toggle{flex:0 0 auto!important;white-space:nowrap}
+.portal-seal{width:38px!important;height:38px!important;flex:0 0 38px;margin:0 8px 0 0!important}
+.portal-nav{flex:0 0 auto;white-space:nowrap;padding:10px 13px!important}
+.portal-sidebar-note,.portal-landscape-mini{display:none!important}
+.portal-main{order:2;width:100%;box-sizing:border-box;padding:22px clamp(14px,2vw,30px)!important;min-width:0}
+.portal-page-content{width:100%;min-width:0}
+.portal-columns{width:100%;min-width:0}
+.portal-topline .portal-school{flex:1;min-width:200px}
+.portal-shell.sidebar-collapsed .portal-sidebar{justify-content:flex-start}
+.portal-shell.sidebar-collapsed .portal-nav{padding:10px!important}
+@media(max-width:760px){
+ .portal-topline{align-items:flex-start;gap:10px;padding:12px!important;flex-wrap:wrap}
+ .portal-school strong{font-size:15px}
+ .portal-school small{font-size:11px}
+ .portal-top-actions{width:100%;justify-content:flex-start;gap:6px}
+ .portal-top-actions .btn{font-size:12px;padding:8px 10px}
+ .portal-sidebar{padding:8px!important;gap:6px}
+ .portal-seal{display:none!important}
+ .portal-nav{font-size:12px!important;padding:9px 11px!important}
+ .portal-main{padding:14px 10px!important}
+}
+
+</style>
 
 <style id="murewom-liquid-glass-login">
 /* Inicio de sesión estático: Liquid Glass con paleta institucional */
@@ -907,7 +938,7 @@ body:has(#loginView:not(.hidden)) #loginView .login-card > p:last-child { margin
             <div class="portal-sidebar-note">Educación propia para el fortalecimiento de nuestro territorio<br><span style="color:#F0F02F">━━━━</span></div>
           </aside>
           <div class="portal-main">
-            <div class="portal-topline"><div class="portal-school"><div class="portal-emblem">✦</div><div><strong>Institución Educativa Indígena<br>Murewom Wayuri</strong><small>Educación propia · Territorio y comunidad</small></div></div><button class="btn outline small" id="portalBackHome">← Inicio</button></div>
+            <div class="portal-topline"><div class="portal-school"><div class="portal-emblem">✦</div><div><strong>Institución Educativa Indígena<br>Murewom Wayuri</strong><small>Educación propia · Territorio y comunidad</small></div></div><div class="portal-top-actions"><button class="btn outline small" id="portalBackHome">← Inicio</button><button class="btn outline small" id="portalPersonalInfo" type="button">♙ Mi información</button><button class="btn outline small" id="portalHelp" type="button">? Ayuda</button><button class="btn outline small" id="portalSettings" type="button">⚙ Configuración</button></div></div>
             <div class="portal-welcome"><div><h2>👋 Bienvenido, ${role==='estudiante'?'estudiante':role==='docente'?'docente':'equipo de Rectoría'}</h2><p>Sigamos fortaleciendo la educación propia en nuestra comunidad.</p></div><div class="portal-date">Portal académico<br>Territorio Wamonae</div></div>
             <button class="rector-profile-banner" id="openRectorProfile" type="button" aria-label="Consultar información del rector"><span class="rector-profile-avatar" id="rectorBannerAvatar">✦</span><span class="rector-profile-copy"><strong id="rectorBannerName">Información del rector</strong><small id="rectorBannerTitle">Perfil institucional · Haz clic para consultar los datos</small></span><span class="rector-profile-cta">Ver información →</span></button>
             <div class="portal-columns"><div>
@@ -938,7 +969,19 @@ body:has(#loginView:not(.hidden)) #loginView .login-card > p:last-child { margin
       if(portalMain && portalTopline){
         const pageContent=document.createElement('div'); pageContent.className='portal-page-content';
         let node=portalTopline.nextSibling; while(node){const next=node.nextSibling;pageContent.appendChild(node);node=next;} portalMain.appendChild(pageContent);
+        const shell=portalMain.closest('.portal-shell');
+        const sidebar=shell && shell.querySelector('.portal-sidebar');
+        if(shell && sidebar){shell.insertBefore(portalTopline,shell.firstChild);shell.insertBefore(sidebar,portalMain);}
       }
+      const personalInfoButton=document.getElementById('portalPersonalInfo');
+      if(personalInfoButton) personalInfoButton.addEventListener('click',()=>{
+        if(role==='rectoria') openRectorProfileModal();
+        else openDemoSection('Mi información');
+      });
+      const helpButton=document.getElementById('portalHelp');
+      if(helpButton) helpButton.addEventListener('click',()=>openDemoSection('Ayuda'));
+      const settingsButton=document.getElementById('portalSettings');
+      if(settingsButton) settingsButton.addEventListener('click',()=>openDemoSection('Configuración'));
       const sidebarToggle=document.getElementById('portalSidebarToggle');
       sidebarToggle.addEventListener('click',()=>{
         const shell=sidebarToggle.closest('.portal-shell');
