@@ -41,7 +41,17 @@ body{background-color:#f5f3ec;background-image:url("data:image/svg+xml,%3Csvg xm
   main:has(.stats) .calendar-day { min-height:34px; }
 }
 
-.grid.two-col + .grid{margin-top:16px}
+/* Panel rector: tarjetas con altura fija y desplazamiento interno cuando hay más contenido */
+@media (min-width:1001px){
+  main:has(.stats) .grid.two-col + .grid{flex:0 0 168px;min-height:0;height:168px;margin-top:16px;overflow:hidden}
+  main:has(.stats) .grid.two-col + .grid > .card{height:100%;min-height:0;max-height:100%;overflow-y:auto;overscroll-behavior:contain;margin:0;scrollbar-gutter:stable}
+  main:has(.stats) .two-col > .card{overflow-y:auto}
+  main:has(.stats) .two-col .stack{overflow-y:auto;max-height:100%}
+  main:has(.stats) .grid.two-col + .grid .stack{min-height:0}
+}
+@media (max-height:760px) and (min-width:1001px){
+  main:has(.stats) .grid.two-col + .grid{flex-basis:145px;height:145px}
+}
 </style>
 </head>
 <body>
