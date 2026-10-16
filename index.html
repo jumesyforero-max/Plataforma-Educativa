@@ -153,6 +153,14 @@
       .brand-name { font-size:14px; max-width:58vw; }
       .brand-mark { width:42px; height:42px; }
     }
+
+    .demo-subpage{margin-top:18px;background:var(--surface,#fff);border:1px solid var(--border,#e5e5e5);border-radius:22px;padding:22px;box-shadow:0 10px 28px rgba(35,25,60,.07)}
+    .demo-subpage h2{margin:0 0 8px;font-size:24px}.demo-subpage p{color:var(--muted);line-height:1.55}
+    .demo-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-top:18px}
+    .demo-form label{display:grid;gap:7px;font-weight:600;font-size:13px}.demo-form input,.demo-form select,.demo-form textarea{width:100%;box-sizing:border-box;border:1px solid var(--border,#ddd);border-radius:12px;padding:12px;background:var(--bg,#fff);color:var(--text,#222);font:inherit}
+    .demo-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.demo-list{margin-top:18px;display:grid;gap:10px}.demo-row{border:1px solid var(--border,#e5e5e5);border-radius:14px;padding:13px 15px;display:flex;justify-content:space-between;gap:12px;align-items:center}.demo-tag{font-size:12px;padding:5px 9px;border-radius:999px;background:rgba(128,128,240,.15)}
+    .demo-help{font-size:12px!important;background:rgba(240,240,47,.16);padding:12px;border-radius:12px}
+    @media(max-width:600px){.demo-subpage{padding:16px}.demo-subpage h2{font-size:21px}.demo-row{align-items:flex-start;flex-direction:column}}
   </style>
 </head>
 <body>
@@ -384,11 +392,46 @@
       document.getElementById('dashDescription').textContent = details.description;
       document.getElementById('dashContent').innerHTML = details.content;
       showView('dashboard');
+      // Los apartados abren pantallas de demostración navegables; no muestran alertas.
       document.querySelectorAll('[data-demo]').forEach(btn => {
-        btn.addEventListener('click', () => {
-          alert('El apartado "' + btn.dataset.demo + '" se implementará en una fase posterior.');
-        });
+        btn.addEventListener('click', () => openDemoSection(btn.dataset.demo));
       });
+    }
+
+
+    const demoSamples = {
+      'Usuarios': {intro:'Crea registros de prueba para explorar la gestión de usuarios.', fields:[['Nombre completo','text','Ej. María Pérez'],['Tipo de usuario','select',['Docente','Estudiante','Auxiliar administrativo']],['Sede','select',['Sede principal','Sede anexa 1','Sede anexa 2']],['Usuario de prueba','text','Ej. mperez']], button:'Agregar registro'},
+      'Horarios': {intro:'Organiza un horario ilustrativo por docente, grupo y sede.', fields:[['Docente','text','Nombre del docente'],['Área','text','Matemáticas'],['Grupo','text','Ej. Multigrado A'],['Día','select',['Lunes','Martes','Miércoles','Jueves','Viernes']],['Hora','text','8:00 a. m.'],['Sede','select',['Sede principal','Sede anexa 1','Sede anexa 2']]],button:'Agregar horario'},
+      'Evaluación': {intro:'Prueba la configuración de los componentes de evaluación. Los porcentajes deben sumar 100%.',fields:[['Periodo académico','text','Ej. Periodo 1'],['Ser (%)','number','20'],['Saber (%)','number','40'],['Hacer (%)','number','40']],button:'Validar configuración'},
+      'Seguimiento': {intro:'Registra un ejemplo de seguimiento a entregables docentes.',fields:[['Docente','text','Nombre del docente'],['Documento','select',['Planeación','DBA','Guía de aprendizaje','Calificaciones']],['Estado','select',['Pendiente','En revisión','Cumplido']],['Observación','text','Nota breve']],button:'Guardar seguimiento'},
+      'Informes': {intro:'Genera una vista previa ilustrativa de un informe académico.',fields:[['Nombre del estudiante','text','Nombre completo'],['Grado oficial','select',['Transición','1','2','3','4','5','6','7','8','9','10','11']],['Periodo','text','Periodo 1']],button:'Crear vista previa'},
+      'Estudiantes': {intro:'Añade estudiantes de prueba y conserva el grado oficial aunque el grupo sea multigrado.',fields:[['Nombre completo','text','Nombre del estudiante'],['Grado oficial','select',['Transición','1','2','3','4','5','6','7','8','9','10','11']],['Grupo multigrado','text','Ej. Grupo A'],['Sede','select',['Sede principal','Sede anexa 1','Sede anexa 2']]],button:'Agregar estudiante'},
+      'Horario': {intro:'Vista de ejemplo para consultar clases asignadas.',fields:[['Día','select',['Lunes','Martes','Miércoles','Jueves','Viernes']],['Área','text','Matemáticas'],['Grupo','text','Grupo asignado'],['Hora','text','8:00 a. m.']],button:'Añadir clase de prueba'},
+      'Calificaciones': {intro:'Ingresa notas de demostración de 1,0 a 5,0. No son calificaciones oficiales.',fields:[['Estudiante','text','Nombre del estudiante'],['Área','text','Matemáticas'],['Ser (1,0–5,0)','number','4.0'],['Saber (1,0–5,0)','number','4.0'],['Hacer (1,0–5,0)','number','4.0']],button:'Calcular promedio de ejemplo'},
+      'Documentos': {intro:'Registra un documento curricular de muestra. Esta demo no sube archivos al servidor.',fields:[['Título','text','Planeación de clase'],['Tipo de documento','select',['Planeación','DBA','Guía','Evidencia']],['Grado','select',['Transición','1','2','3','4','5','6','7','8','9','10','11']]],button:'Registrar documento'},
+      'Asistencia': {intro:'Marca asistencia de prueba para un grupo.',fields:[['Grupo','text','Grupo multigrado'],['Fecha','date',''],['Estudiante','text','Nombre del estudiante'],['Estado','select',['Presente','Ausente','Llegó tarde','Excusa']]],button:'Registrar asistencia'},
+      'Actividades': {intro:'Crea una actividad o guía de ejemplo para revisar su presentación.',fields:[['Título','text','Actividad de matemáticas'],['Grado','select',['Transición','1','2','3','4','5','6','7','8','9','10','11']],['Fecha de entrega','date',''],['Descripción','text','Instrucciones de la actividad']],button:'Publicar en esta demo'},
+      'Observaciones': {intro:'Registra una observación de ejemplo para el seguimiento formativo.',fields:[['Estudiante','text','Nombre del estudiante'],['Tipo','select',['Académica','Convivencia','Acompañamiento']],['Observación','text','Escribe una observación']],button:'Guardar observación'}
+    };
+
+    function openDemoSection(name){
+      const spec=demoSamples[name]||{intro:'Apartado de demostración.',fields:[['Descripción','text','Escribe un dato de ejemplo']],button:'Guardar ejemplo'};
+      const host=document.getElementById('dashContent');
+      let section=document.getElementById('demoSubpage');
+      if(!section){section=document.createElement('section');section.id='demoSubpage';section.className='demo-subpage';host.appendChild(section)}
+      const safe=name.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+      const fields=spec.fields.map((f,i)=>{let [label,type,placeholder]=f;let id='demoField'+i;let control='';if(type==='select'){control='<select id="'+id+'">'+placeholder.map(v=>'<option>'+v+'</option>').join('')+'</select>'}else{control='<input id="'+id+'" type="'+type+'" '+(placeholder&&type!=='date'?'placeholder="'+String(placeholder).replace(/"/g,'&quot;')+'"':'')+' '+(type==='number'?'min="1" max="5" step="0.1"':'')+'>'}return '<label>'+label+control+'</label>'}).join('');
+      section.innerHTML='<div class="eyebrow">MODO DE REVISIÓN</div><h2>'+safe+'</h2><p>'+spec.intro+'</p><p class="demo-help">Los datos que agregues aquí son únicamente ejemplos locales para revisar la interfaz; no se envían ni se guardan como registros oficiales.</p><form id="demoSectionForm" class="demo-form">'+fields+'</form><div id="demoResult" class="hidden"></div><div class="demo-actions"><button class="btn" id="demoSubmit" type="button">'+spec.button+'</button><button class="btn secondary" id="demoBack" type="button">Volver al panel</button></div><div id="demoList" class="demo-list"></div>';
+      document.getElementById('demoBack').addEventListener('click',()=>{section.remove();window.scrollTo({top:0,behavior:'smooth'})});
+      document.getElementById('demoSubmit').addEventListener('click',()=>{
+        const values=[...section.querySelectorAll('#demoSectionForm input,#demoSectionForm select')].map(el=>el.value.trim());
+        if(values.some(v=>!v)){document.getElementById('demoResult').classList.remove('hidden');document.getElementById('demoResult').innerHTML='<p>Completa los campos para ver el ejemplo.</p>';return}
+        const result=document.getElementById('demoResult');result.classList.remove('hidden');
+        if(name==='Evaluación'){const nums=values.slice(1).map(Number);const sum=nums.reduce((a,b)=>a+b,0);result.innerHTML='<p><strong>Total: '+sum+'%</strong> — '+(sum===100?'Configuración válida para la demo.':'Los porcentajes deben sumar 100%.')+'</p>';return}
+        if(name==='Calificaciones'){const nums=values.slice(2).map(Number);if(nums.some(n=>n<1||n>5)){result.innerHTML='<p>Las notas deben estar entre 1,0 y 5,0.</p>';return}const avg=nums.reduce((a,b)=>a+b,0)/nums.length;result.innerHTML='<p><strong>Promedio simple de demostración: '+avg.toFixed(1).replace('.',',')+'</strong></p>';return}
+        const row=document.createElement('div');row.className='demo-row';const summary=document.createElement('span');summary.textContent=values.join(' · ');const tag=document.createElement('span');tag.className='demo-tag';tag.textContent='Ejemplo agregado';row.append(summary,tag);document.getElementById('demoList').prepend(row);result.innerHTML='<p>Se agregó un ejemplo a esta pantalla.</p>';
+      });
+      section.scrollIntoView({behavior:'smooth',block:'start'});
     }
 
     // Demo navigation only; dashboard preview is opened via a special local interaction.
