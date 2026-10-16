@@ -11,108 +11,6 @@ body{background-color:#f5f3ec;background-image:url("data:image/svg+xml,%3Csvg xm
 @media(max-width:1000px){.layout{grid-template-columns:205px 1fr}main{padding:20px}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.two-col{grid-template-columns:1fr}}
 @media(max-width:700px){.topbar{padding:0 14px;height:62px}.brand h1{font-size:13px}.brand small{font-size:11px}.top-actions button{padding:7px}.layout{display:block}aside{padding:8px;display:flex;gap:5px;overflow:auto;border-right:0;border-bottom:1px solid var(--line)}.userbox,.navlabel,.sidebar-note{display:none}.navbtn{white-space:nowrap;width:auto;margin:0;padding:10px}.navbtn span:last-child{display:inline}main{padding:17px 12px}.pagehead h2{font-size:23px}.stats{gap:9px}.stat{padding:13px}.stat strong{font-size:24px}.stat-top{font-size:11px}.stat-icon{width:30px;height:30px}.formgrid{grid-template-columns:1fr}.field.full{grid-column:auto}.card{padding:15px}.toolbar{align-items:stretch}.toolbar .field{min-width:calc(50% - 8px)}.toolbar .field.search{min-width:100%}.top-actions .hide-mobile{display:none}}
 @media print{body{background:white}.topbar,aside,.no-print,.pagehead,.footer-note{display:none!important}.layout{display:block;min-height:0}main{padding:0;max-width:none}.card,.stat{box-shadow:none}.report-head h2{font-size:20px}.report-table th,.report-table td{font-size:10px}}
-
-/* Ajuste de panel: mantener la distribución y limitar el contenido al viewport */
-@media (min-width: 1001px) {
-  html, body { height:100%; overflow:hidden; }
-  .app { height:100vh; min-height:0; overflow:hidden; }
-  .layout { height:calc(100vh - 70px); min-height:0; overflow:hidden; }
-  aside { min-height:0; overflow-y:auto; }
-  main:has(.stats) { height:calc(100vh - 70px); min-height:0; overflow:hidden; display:flex; flex-direction:column; padding-top:22px; padding-bottom:16px; }
-  main:has(.stats) .pagehead { flex:0 0 auto; margin-bottom:14px; }
-  main:has(.stats) .stats { flex:0 0 auto; margin-bottom:14px; gap:12px; }
-  main:has(.stats) .stat { padding:14px 16px; min-height:135px; }
-  main:has(.stats) .stat strong { font-size:27px; margin-top:7px; }
-  main:has(.stats) .two-col { flex:1 1 0; min-height:0; overflow:hidden; gap:14px; }
-  main:has(.stats) .two-col > .card { min-height:0; height:100%; overflow-y:auto; overscroll-behavior:contain; margin-bottom:0; padding:18px; scrollbar-gutter:stable; }
-  main:has(.stats) .two-col .stack { min-height:0; }
-  main:has(.stats) .calendar-grid { gap:4px; }
-  main:has(.stats) .calendar-day { min-height:42px; padding:5px; }
-  main:has(.stats) .chart-bars { height:130px; }
-}
-@media (max-height:760px) and (min-width:1001px) {
-  main:has(.stats) { padding-top:14px; }
-  main:has(.stats) .pagehead h2 { font-size:24px; }
-  main:has(.stats) .pagehead { margin-bottom:10px; }
-  main:has(.stats) .stat { min-height:112px; padding:10px 14px; }
-  main:has(.stats) .stat strong { font-size:24px; margin-top:4px; }
-  main:has(.stats) .stat small { font-size:11px; }
-  main:has(.stats) .two-col > .card { padding:14px; }
-  main:has(.stats) .calendar-day { min-height:34px; }
-}
-
-/* Panel rector: tarjetas con altura fija y desplazamiento interno cuando hay más contenido */
-@media (min-width:1001px){
-  main:has(.stats) .grid.two-col + .grid{flex:0 0 168px;min-height:0;height:168px;margin-top:16px;overflow:hidden}
-  main:has(.stats) .grid.two-col + .grid > .card{height:100%;min-height:0;max-height:100%;overflow-y:auto;overscroll-behavior:contain;margin:0;scrollbar-gutter:stable}
-  main:has(.stats) .two-col > .card{overflow-y:auto}
-  main:has(.stats) .two-col .stack{overflow-y:auto;max-height:100%}
-  main:has(.stats) .grid.two-col + .grid .stack{min-height:0}
-}
-@media (max-height:760px) and (min-width:1001px){
-  main:has(.stats) .grid.two-col + .grid{flex-basis:145px;height:145px}
-}
-
-/* Corrección: la barra de desplazamiento debe quedar recortada dentro del borde redondeado de cada tarjeta */
-@media (min-width:1001px){
-  main:has(.stats) .two-col > .card,
-  main:has(.stats) .grid.two-col + .grid > .card {
-    overflow-x:hidden !important;
-    scrollbar-width:thin;
-    scrollbar-color:#9aa0a6 transparent;
-    clip-path:inset(0 round var(--radius));
-    padding-right:22px;
-  }
-  main:has(.stats) .two-col > .card::-webkit-scrollbar,
-  main:has(.stats) .grid.two-col + .grid > .card::-webkit-scrollbar { width:10px; }
-  main:has(.stats) .two-col > .card::-webkit-scrollbar-track,
-  main:has(.stats) .grid.two-col + .grid > .card::-webkit-scrollbar-track { background:transparent; margin:12px 3px; }
-  main:has(.stats) .two-col > .card::-webkit-scrollbar-thumb,
-  main:has(.stats) .grid.two-col + .grid > .card::-webkit-scrollbar-thumb { background:#9aa0a6; border-radius:999px; border:3px solid transparent; background-clip:content-box; }
-}
-
-/* Navegación con desplazamiento automático en TODAS las páginas (rector y docentes).
-   Las páginas largas pueden recorrerse verticalmente sin cortar tablas ni formularios;
-   el panel del rector conserva sus tarjetas fijas y sus desplazamientos internos. */
-@media (min-width:1001px){
-  main:not(:has(.stats)) {
-    height:calc(100vh - 70px);
-    min-height:0;
-    overflow-y:auto !important;
-    overflow-x:hidden !important;
-    overscroll-behavior-y:contain;
-    scrollbar-width:thin;
-    scrollbar-color:#9aa0a6 transparent;
-  }
-  main:not(:has(.stats))::-webkit-scrollbar { width:10px; }
-  main:not(:has(.stats))::-webkit-scrollbar-track { background:transparent; margin:8px 2px; }
-  main:not(:has(.stats))::-webkit-scrollbar-thumb { background:#9aa0a6; border-radius:999px; border:3px solid transparent; background-clip:content-box; }
-}
-/* En pantallas pequeñas se permite el desplazamiento normal de toda la página. */
-@media (max-width:1000px){
-  html, body { height:auto; min-height:100%; overflow:auto; }
-  .app, .layout { height:auto; min-height:100vh; overflow:visible; }
-  main { height:auto; min-height:0; overflow:visible; }
-}
-
-
-.settings-menu{display:grid;gap:0;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.94);padding:0 12px;overflow:hidden}
-.settings-option{border-bottom:1px solid #e6e8eb;min-width:0}
-.settings-option:last-child{border-bottom:0}
-.settings-option>summary{list-style:none;display:flex;align-items:center;gap:16px;min-height:84px;padding:14px 10px;cursor:pointer}
-.settings-option>summary::-webkit-details-marker{display:none}
-.settings-icon{width:24px;flex:0 0 24px;text-align:center;font-size:19px;color:#202020}
-.settings-copy{display:grid;gap:4px;min-width:0;flex:1}
-.settings-copy strong{font-size:14px;font-weight:650;color:#111}
-.settings-copy small{font-size:12px;color:#596675}
-.settings-chevron{font-size:24px;color:#666;transition:transform .15s ease}
-.settings-option[open]>.settings-option>summary .settings-chevron,.settings-option[open]>summary .settings-chevron{transform:rotate(90deg)}
-.settings-body{padding:0 10px 18px 50px;color:var(--muted)}
-.settings-inner{padding:12px 0 0}
-.settings-institution{border-top:1px solid #e6e8eb;margin-top:18px;padding-top:18px}
-.settings-extra{margin-top:12px}
-@media(max-width:700px){.settings-option>summary{min-height:76px;padding:12px 6px;gap:10px}.settings-body{padding:0 6px 16px 38px}.settings-copy small{line-height:1.4}}
-
 </style>
 </head>
 <body>
@@ -150,7 +48,7 @@ body{background-color:#f5f3ec;background-image:url("data:image/svg+xml,%3Csvg xm
 <script>
 (() => {
 'use strict';
-const KEY='muregom_wayuu_version_anterior_sin_base_v1';
+const KEY='muregom_wayuu_demo_v1';
 const DEFAULTS={
  users:[{id:'u-rector',username:'rector',password:'Muregom2026!',name:'Rector institucional',role:'rector',active:true,forceChange:false}],
  students:[], subjects:[], assignments:[], grades:[], dba:[], settings:{year:new Date().getFullYear(),weights:{saber:50,hacer:25,ser:20,auto:5},passing:3.0,periodWeights:[25,25,25,25],school:'Institución Educativa Indígena Murewom Wayuri'}
@@ -221,13 +119,7 @@ function trackingTable(teachers,period){return teachers.length?`<div class="tabl
 function renderReports(){return `${pageTitle('Informes académicos','Genera informes individuales y consulta el consolidado institucional.')}<section class="card"><h3>Generar informe individual</h3><p class="sub">Selecciona un estudiante para revisar su consolidado y generar el PDF.</p><div class="toolbar"><div class="field search"><label>Estudiante</label><select id="reportStudent"><option value="">Selecciona un estudiante</option>${db.students.map(s=>`<option value="${s.id}">${esc(s.name)} · Grado ${esc(s.grade)} · Curso ${esc(s.course||s.group||'A')}</option>`).join('')}</select></div><div class="field"><label>Periodo del informe</label><select id="reportPeriod"><option value="1">Periodo 1</option><option value="2">Periodo 2</option><option value="3">Periodo 3</option><option value="4">Periodo 4</option><option value="General" selected>General</option></select></div><button class="btn primary" data-action="report-selected">Vista previa</button></div><div id="reportPreview"></div></section><section class="card"><h3>Consolidado por grado</h3><p class="sub">Consulta el estado de los informes de un grado completo.</p><div class="toolbar"><div class="field"><label>Grado</label><select id="reportGrade"><option value="">Selecciona un grado</option>${gradeOptions()}</select></div><button class="btn" data-action="grade-report">Generar consolidado</button><button class="btn primary" data-action="print-grade-reports">Imprimir bloque del grado</button></div><div id="gradeReportPreview"></div></section>`}
 function renderMyGrades(){const as=myAssignments();return `${pageTitle('Registro de notas','Selecciona una asignación para ingresar o actualizar calificaciones.')}<section class="card"><div class="toolbar"><div class="field"><label>Grado y asignatura</label><select id="myAssignmentSelect"><option value="">Selecciona una asignación</option>${as.map(a=>`<option value="${a.id}">Grado ${esc(a.grade)} · ${esc(subjectById(a.subjectId)?.name||'')}</option>`).join('')}</select></div><div class="field"><label>Periodo</label><select id="myGradePeriod"><option value="1">Periodo 1</option><option value="2">Periodo 2</option><option value="3">Periodo 3</option><option value="4">Periodo 4</option></select></div><button class="btn primary" data-action="grade-load">Abrir registro</button></div><div id="gradeEditor"></div></section>`}
 function renderMyReports(){const ids=new Set(myAssignments().map(a=>a.grade));const students=db.students.filter(s=>ids.has(s.grade));return `${pageTitle('Informes','Genera o consulta informes de estudiantes de tus grados asignados.')}<section class="card"><div class="toolbar"><div class="field search"><label>Estudiante</label><select id="myReportStudent"><option value="">Selecciona un estudiante</option>${students.map(s=>`<option value="${s.id}">${esc(s.name)} · Grado ${esc(s.grade)}</option>`).join('')}</select></div><button class="btn primary" data-action="my-report-selected">Vista previa</button></div><div id="myReportPreview"></div></section>`}
-function renderSettings(){const w=db.settings.weights;return `${pageTitle('Configuración','Administra los parámetros institucionales, el control académico y el mantenimiento de la plataforma.')}<div class="settings-menu">
-<details class="settings-option" open><summary><span class="settings-icon">☷</span><span class="settings-copy"><strong>Configuración general</strong><small>Año lectivo, datos institucionales y criterios de evaluación.</small></span><span class="settings-chevron">›</span></summary><div class="settings-body"><section class="settings-inner"><h3>Año y criterios de evaluación</h3><p class="sub">Define los porcentajes que utilizará la plataforma para calcular las notas.</p><form id="settingsForm"><div class="formgrid"><div class="field"><label>Año lectivo</label><input type="number" name="year" min="2020" max="2100" value="${db.settings.year}" required></div><div class="field"><label>Nota mínima aprobatoria (referencia)</label><input type="number" name="passing" min="1" max="5" step=".1" value="${db.settings.passing}" required></div><div class="field"><label>Saber (%)</label><input type="number" name="saber" min="0" max="100" value="${w.saber}" required></div><div class="field"><label>Hacer (%)</label><input type="number" name="hacer" min="0" max="100" value="${w.hacer}" required></div><div class="field"><label>Ser (%)</label><input type="number" name="ser" min="0" max="100" value="${w.ser}" required></div><div class="field"><label>Autoevaluación (%)</label><input type="number" name="auto" min="0" max="100" value="${w.auto}" required></div>${[1,2,3,4].map((p,i)=>`<div class="field"><label>Ponderación anual del periodo ${p} (%)</label><input type="number" name="period${p}" min="0" max="100" value="${db.settings.periodWeights[i]}" required></div>`).join('')}</div><div class="notice" style="margin-top:16px">Los porcentajes de dimensiones deben sumar 100 %. Las ponderaciones anuales de los cuatro periodos también deben sumar 100 %. Verifica estos valores con el SIEE de la institución antes de utilizarlos oficialmente.</div><div class="actions"><button class="btn primary" type="submit">Guardar configuración</button></div></form><div class="settings-institution"><h3>Perfil institucional</h3><p class="sub">${esc(db.settings.school)}</p><p class="muted small">Esta demostración guarda los datos en el navegador; no tiene sincronización entre dispositivos ni protección de servidor.</p></div></section></div></details>
-<details class="settings-option"><summary><span class="settings-icon">♢</span><span class="settings-copy"><strong>Seguridad y permisos</strong><small>Usuarios, roles, sesiones y restricciones de acceso.</small></span><span class="settings-chevron">›</span></summary><div class="settings-body"><p>Administra las cuentas y el estado de acceso de los docentes desde el módulo de usuarios.</p><div class="actions"><button class="btn primary" type="button" data-settings-page="teachers">Administrar docentes y accesos</button><button class="btn" type="button" data-settings-help="security">Ver nota de seguridad</button></div><div class="notice settings-extra hidden" data-settings-extra="security">Esta versión es una demostración local: no implementa sesiones protegidas por servidor ni permisos de seguridad reales. Cierra sesión al terminar y no uses datos personales reales.</div></div></details>
-<details class="settings-option"><summary><span class="settings-icon">▦</span><span class="settings-copy"><strong>Control académico</strong><small>Periodos, fechas límite, cierre de notas y autorizaciones.</small></span><span class="settings-chevron">›</span></summary><div class="settings-body"><p>Los porcentajes y ponderaciones de los periodos se editan en Configuración general. Para revisar la actividad de los docentes y el registro de notas, utiliza el seguimiento académico.</p><div class="actions"><button class="btn primary" type="button" data-settings-focus="general">Editar criterios y periodos</button><button class="btn" type="button" data-settings-page="tracking">Abrir seguimiento docente</button></div><div class="notice">Las fechas límite, el cierre formal de periodos y las autorizaciones institucionales no están implementados como controles independientes en esta versión.</div></div></details>
-<details class="settings-option"><summary><span class="settings-icon">▧</span><span class="settings-copy"><strong>Informes y auditoría</strong><small>Diseño PDF, trazabilidad, aprobaciones e historial de cambios.</small></span><span class="settings-chevron">›</span></summary><div class="settings-body"><p>Genera informes académicos y consulta el seguimiento disponible. El historial visible se limita a los movimientos que registra la demostración.</p><div class="actions"><button class="btn primary" type="button" data-settings-page="reports">Abrir informes PDF</button><button class="btn" type="button" data-settings-page="tracking">Ver seguimiento docente</button></div><div class="notice">La aprobación formal de informes y una auditoría inalterable no están implementadas en esta versión.</div></div></details>
-<details class="settings-option"><summary><span class="settings-icon">▤</span><span class="settings-copy"><strong>Datos y mantenimiento</strong><small>Respaldos, restauración, validación y diagnóstico.</small></span><span class="settings-chevron">›</span></summary><div class="settings-body"><p>Exporta una copia de seguridad para conservar los datos de esta demostración o importa un respaldo previamente exportado.</p><div class="actions"><button class="btn primary" type="button" data-action="export-backup">Exportar copia de seguridad</button><button class="btn" type="button" data-action="import-backup">Importar copia</button><button class="btn danger" type="button" data-action="reset-demo">Restablecer demostración</button></div><div class="notice">La restauración reemplaza los datos actuales. El restablecimiento borra los datos locales de esta demostración en este navegador.</div></div></details>
-</div>`}
+function renderSettings(){const w=db.settings.weights;return `${pageTitle('Configuración','Ajusta las reglas de evaluación y administra los datos de la demostración.')}<section class="card"><h3>Año y criterios de evaluación</h3><p class="sub">Define los porcentajes que utilizará la plataforma para calcular las notas.</p><form id="settingsForm"><div class="formgrid"><div class="field"><label>Año lectivo</label><input type="number" name="year" min="2020" max="2100" value="${db.settings.year}" required></div><div class="field"><label>Nota mínima aprobatoria (referencia)</label><input type="number" name="passing" min="1" max="5" step=".1" value="${db.settings.passing}" required></div><div class="field"><label>Saber (%)</label><input type="number" name="saber" min="0" max="100" value="${w.saber}" required></div><div class="field"><label>Hacer (%)</label><input type="number" name="hacer" min="0" max="100" value="${w.hacer}" required></div><div class="field"><label>Ser (%)</label><input type="number" name="ser" min="0" max="100" value="${w.ser}" required></div><div class="field"><label>Autoevaluación (%)</label><input type="number" name="auto" min="0" max="100" value="${w.auto}" required></div>${[1,2,3,4].map((p,i)=>`<div class="field"><label>Ponderación anual del periodo ${p} (%)</label><input type="number" name="period${p}" min="0" max="100" value="${db.settings.periodWeights[i]}" required></div>`).join('')}</div><div class="notice" style="margin-top:16px">Los porcentajes de dimensiones deben sumar 100 %. Las ponderaciones anuales de los cuatro periodos también deben sumar 100 %. Verifica estos valores con el SIEE de la institución antes de utilizarlos oficialmente.</div><div class="actions"><button class="btn primary" type="submit">Guardar configuración</button><button class="btn" type="button" data-action="export-backup">Exportar copia de seguridad</button><button class="btn" type="button" data-action="import-backup">Importar copia</button><button class="btn danger" type="button" data-action="reset-demo">Restablecer demostración</button></div></form></section><section class="card"><h3>Perfil institucional</h3><p class="sub">${esc(db.settings.school)}</p><p class="muted small">La configuración y los datos de esta versión de demostración se guardan en el almacenamiento local del navegador. No hay sincronización entre dispositivos ni protección de servidor.</p></section>`}
 function handleAction(action,el){const [act,id]=action.split(':');switch(act){case'teacher-new':openTeacherModal();break;case'teacher-edit':openTeacherModal(id);break;case'teacher-reset':resetTeacher(id);break;case'teacher-toggle':toggleTeacher(id);break;case'student-new':openStudentModal();break;case'student-edit':openStudentModal(id);break;case'subject-new':openSubjectModal();break;case'subject-edit':openSubjectModal(id);break;case'dba-manage':openDbaModal(id);break;case'assignment-new':openAssignmentModal();break;case'assignment-delete':deleteAssignment(id);break;case'grade-open':activePage='mygrades';renderNav();renderPage();setTimeout(()=>{const sel=$('myAssignmentSelect');if(sel){sel.value=id;loadGradeEditor()}},0);break;case'grade-load':loadGradeEditor();break;case'calendar-add':addCalendarActivity();break;case'calendar-delete':db.calendarItems=(db.calendarItems||[]).filter(x=>x.id!==id);saveDB();renderPage();break;case'report-open':activePage='reports';renderNav();renderPage();setTimeout(()=>{if($('reportStudent'))$('reportStudent').value='';},0);break;case'report-selected':previewSelectedReport('reportStudent','reportPreview');break;case'my-report-selected':previewSelectedReport('myReportStudent','myReportPreview');break;case'student-report':showReportModal(id);break;case'grade-report':previewGradeReport();break;case'export-backup':exportBackup();break;case'import-backup':importBackup();break;case'reset-demo':resetDemo();break;case'mygrades':activePage='mygrades';renderNav();renderPage();break;case'calendar-prev':calendarMonth=new Date(calendarMonth.getFullYear(),calendarMonth.getMonth()-1,1);renderPage();break;case'calendar-next':calendarMonth=new Date(calendarMonth.getFullYear(),calendarMonth.getMonth()+1,1);renderPage();break;default:break}}
 function handleChange(type,el){if(type==='tracking-period'){$('trackingTable').innerHTML=trackingTable(db.users.filter(u=>u.role==='docente'),Number(el.value))}if(type==='student-grade-filter')filterStudents();if(type==='grade-assignment'||type==='grade-period')loadGradeEditor()}
 function handleLive(type,el){if(type==='teacher-filter'){$('teacherTable').innerHTML=teacherTable(db.users.filter(u=>u.role==='docente'&&(u.name+' '+u.username).toLowerCase().includes(el.value.toLowerCase())));bindActionButtons($('teacherTable'))}if(type==='student-filter')filterStudents()}
@@ -256,7 +148,6 @@ function exportBackup(){const blob=new Blob([JSON.stringify(db,null,2)],{type:'a
 function importBackup(){const input=document.createElement('input');input.type='file';input.accept='.json,application/json';input.onchange=async()=>{const file=input.files[0];if(!file)return;try{const parsed=JSON.parse(await file.text());if(!Array.isArray(parsed.users)||!Array.isArray(parsed.students)||!Array.isArray(parsed.grades))throw Error('Formato inválido');if(!confirm('Importar reemplazará los datos actuales de esta demostración. ¿Continuar?'))return;db={...clone(DEFAULTS),...parsed,settings:{...DEFAULTS.settings,...parsed.settings}};saveDB();session=null;$('app').classList.add('hidden');$('loginScreen').classList.remove('hidden');notify('Copia importada. Inicia sesión de nuevo.')}catch(e){notify('El archivo no es una copia válida de esta plataforma.')}};input.click()}
 function resetDemo(){if(!confirm('Esto borrará todos los datos guardados por esta demostración en este navegador. ¿Continuar?'))return;db=clone(DEFAULTS);saveDB();session=null;$('app').classList.add('hidden');$('loginScreen').classList.remove('hidden');notify('Demostración restablecida.')}
 $('main').addEventListener('submit',e=>{if(e.target.id!=='settingsForm')return;e.preventDefault();const f=new FormData(e.target);const weights={saber:Number(f.get('saber')),hacer:Number(f.get('hacer')),ser:Number(f.get('ser')),auto:Number(f.get('auto'))};const p=[1,2,3,4].map(n=>Number(f.get('period'+n)));if(Object.values(weights).some(x=>x<0||x>100)||Object.values(weights).reduce((a,b)=>a+b,0)!==100){notify('Las ponderaciones de las dimensiones deben sumar exactamente 100 %.');return}if(p.some(x=>x<0||x>100)||p.reduce((a,b)=>a+b,0)!==100){notify('Las ponderaciones de los cuatro periodos deben sumar exactamente 100 %.');return}db.settings.year=Number(f.get('year'));db.settings.passing=Number(f.get('passing'));db.settings.weights=weights;db.settings.periodWeights=p;saveDB();renderPage();notify('Configuración guardada.')});
-document.addEventListener('click',e=>{const p=e.target.closest('[data-settings-page]');if(p){activePage=p.dataset.settingsPage;renderNav();renderPage();return}const f=e.target.closest('[data-settings-focus]');if(f){document.querySelector('.settings-option')?.setAttribute('open','');document.querySelector('.settings-option .settings-inner')?.scrollIntoView({behavior:'smooth',block:'start'});return}const h=e.target.closest('[data-settings-help]');if(h){document.querySelector('[data-settings-extra="security"]')?.classList.toggle('hidden');return}});
 document.addEventListener('click',e=>{const b=e.target.closest('[data-action]');if(!b)return;const action=b.dataset.action;if(action.startsWith('print-report:')){printReport(action.split(':')[1]);return}if(action==='print-grade-reports'){printGradeReports();return}if(action==='calendar-add'){addCalendarActivity();return}if(action.startsWith('calendar-delete:')){db.calendarItems=(db.calendarItems||[]).filter(x=>x.id!==action.split(':')[1]);saveDB();renderPage();return}if(action.startsWith('teacher-dba-add:')){const parts=action.split(':');const a=assignmentById(parts[1]);const desc=$('newDbaDescription')?.value.trim();if(!a||!desc){notify('Escribe la descripción del DBA.');return}db.dba.push({id:uid('dba'),subjectId:a.subjectId,grade:a.grade,period:Number(parts[2]),description:desc,createdBy:session.id});saveDB();logActivity('DBA registrado por '+session.name);loadGradeEditor();notify('DBA guardado.');return}if(action.startsWith('grade-save:')||action.startsWith('grade-save-draft:')){const parts=action.split(':');saveGrades(parts[1],Number(parts[2]),action.startsWith('grade-save-draft:'));return}if(action.startsWith('dba-delete:')){return}if(action==='modal-close'){closeModal();return}if(action==='teacher-new'||action==='teacher-edit'||action==='teacher-reset'||action==='teacher-toggle'||action==='student-new'||action==='student-edit'||action==='subject-new'||action==='subject-edit'||action==='dba-manage'||action==='assignment-new'||action==='assignment-delete'||action==='grade-open'||action==='grade-load'||action==='report-open'||action==='report-selected'||action==='my-report-selected'||action==='student-report'||action==='grade-report'||action==='export-backup'||action==='import-backup'||action==='reset-demo'||action==='mygrades'){handleAction(action,b)}});
 renderNav();
 })();
