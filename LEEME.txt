@@ -1,15 +1,9 @@
-MUREWOM WAYURI — PERSONAL Y ÁREAS DE DESEMPEÑO (CERTIFICACIÓN 2026)
+Murewom Wayuri — Informes con impresión restringida
 
-Incluye los 18 docentes de aula y el rector de la certificación entregada. Se separa el área de desempeño principal de las asignaturas adicionales indicadas en observaciones.
+Cambios:
+- Los docentes pueden visualizar informes individuales, pero no ven botones para imprimir ni guardar PDF.
+- El rector conserva la opción de imprimir o guardar informes individuales en PDF.
+- La impresión de informes de todo un grado también está reservada al rector.
+- Se agregaron verificaciones en las funciones de impresión para impedir que un docente invoque directamente esas acciones desde la interfaz.
 
-En el módulo “Docentes y rectoría” se muestran ambos campos y se pueden editar desde “Editar”. Los cambios de área y asignaturas adicionales se guardan localmente en el navegador.
-
-ACCESO DEL RECTOR
-Usuario: rector
-Contraseña: Murewom2026!
-
-ACCESO INICIAL DE DOCENTES
-Contraseña temporal: Docente2026!
-Usuarios individuales: revisar la tabla del módulo “Docentes y rectoría”.
-
-La plataforma es una demostración local. Los datos se guardan en el navegador y no se sincronizan entre dispositivos. Para uso institucional real se requiere un servidor con autenticación y protección de datos.
+Nota: esta plataforma sigue usando el modelo de autenticación y almacenamiento local de la versión base.
