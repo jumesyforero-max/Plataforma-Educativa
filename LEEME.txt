@@ -1,0 +1,15 @@
+MUREWOM WAYURI — PERSONAL Y ÁREAS DE DESEMPEÑO (CERTIFICACIÓN 2026)
+
+Incluye los 18 docentes de aula y el rector de la certificación entregada. Se separa el área de desempeño principal de las asignaturas adicionales indicadas en observaciones.
+
+En el módulo “Docentes y rectoría” se muestran ambos campos y se pueden editar desde “Editar”. Los cambios de área y asignaturas adicionales se guardan localmente en el navegador.
+
+ACCESO DEL RECTOR
+Usuario: rector
+Contraseña: Murewom2026!
+
+ACCESO INICIAL DE DOCENTES
+Contraseña temporal: Docente2026!
+Usuarios individuales: revisar la tabla del módulo “Docentes y rectoría”.
+
+La plataforma es una demostración local. Los datos se guardan en el navegador y no se sincronizan entre dispositivos. Para uso institucional real se requiere un servidor con autenticación y protección de datos.
