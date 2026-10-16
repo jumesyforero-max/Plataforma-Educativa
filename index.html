@@ -52,6 +52,49 @@ body{background-color:#f5f3ec;background-image:url("data:image/svg+xml,%3Csvg xm
 @media (max-height:760px) and (min-width:1001px){
   main:has(.stats) .grid.two-col + .grid{flex-basis:145px;height:145px}
 }
+
+/* Corrección: la barra de desplazamiento debe quedar recortada dentro del borde redondeado de cada tarjeta */
+@media (min-width:1001px){
+  main:has(.stats) .two-col > .card,
+  main:has(.stats) .grid.two-col + .grid > .card {
+    overflow-x:hidden !important;
+    scrollbar-width:thin;
+    scrollbar-color:#9aa0a6 transparent;
+    clip-path:inset(0 round var(--radius));
+    padding-right:22px;
+  }
+  main:has(.stats) .two-col > .card::-webkit-scrollbar,
+  main:has(.stats) .grid.two-col + .grid > .card::-webkit-scrollbar { width:10px; }
+  main:has(.stats) .two-col > .card::-webkit-scrollbar-track,
+  main:has(.stats) .grid.two-col + .grid > .card::-webkit-scrollbar-track { background:transparent; margin:12px 3px; }
+  main:has(.stats) .two-col > .card::-webkit-scrollbar-thumb,
+  main:has(.stats) .grid.two-col + .grid > .card::-webkit-scrollbar-thumb { background:#9aa0a6; border-radius:999px; border:3px solid transparent; background-clip:content-box; }
+}
+
+/* Navegación con desplazamiento automático en TODAS las páginas (rector y docentes).
+   Las páginas largas pueden recorrerse verticalmente sin cortar tablas ni formularios;
+   el panel del rector conserva sus tarjetas fijas y sus desplazamientos internos. */
+@media (min-width:1001px){
+  main:not(:has(.stats)) {
+    height:calc(100vh - 70px);
+    min-height:0;
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+    overscroll-behavior-y:contain;
+    scrollbar-width:thin;
+    scrollbar-color:#9aa0a6 transparent;
+  }
+  main:not(:has(.stats))::-webkit-scrollbar { width:10px; }
+  main:not(:has(.stats))::-webkit-scrollbar-track { background:transparent; margin:8px 2px; }
+  main:not(:has(.stats))::-webkit-scrollbar-thumb { background:#9aa0a6; border-radius:999px; border:3px solid transparent; background-clip:content-box; }
+}
+/* En pantallas pequeñas se permite el desplazamiento normal de toda la página. */
+@media (max-width:1000px){
+  html, body { height:auto; min-height:100%; overflow:auto; }
+  .app, .layout { height:auto; min-height:100vh; overflow:visible; }
+  main { height:auto; min-height:0; overflow:visible; }
+}
+
 </style>
 </head>
 <body>
