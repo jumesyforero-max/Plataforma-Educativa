@@ -11,6 +11,90 @@ body{background-color:#f5f3ec;background-image:url("data:image/svg+xml,%3Csvg xm
 @media(max-width:1000px){.layout{grid-template-columns:205px 1fr}main{padding:20px}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.two-col{grid-template-columns:1fr}}
 @media(max-width:700px){.topbar{padding:0 14px;height:62px}.brand h1{font-size:13px}.brand small{font-size:11px}.top-actions button{padding:7px}.layout{display:block}aside{padding:8px;display:flex;gap:5px;overflow:auto;border-right:0;border-bottom:1px solid var(--line)}.userbox,.navlabel,.sidebar-note{display:none}.navbtn{white-space:nowrap;width:auto;margin:0;padding:10px}.navbtn span:last-child{display:inline}main{padding:17px 12px}.pagehead h2{font-size:23px}.stats{gap:9px}.stat{padding:13px}.stat strong{font-size:24px}.stat-top{font-size:11px}.stat-icon{width:30px;height:30px}.formgrid{grid-template-columns:1fr}.field.full{grid-column:auto}.card{padding:15px}.toolbar{align-items:stretch}.toolbar .field{min-width:calc(50% - 8px)}.toolbar .field.search{min-width:100%}.top-actions .hide-mobile{display:none}}
 @media print{body{background:white}.topbar,aside,.no-print,.pagehead,.footer-note{display:none!important}.layout{display:block;min-height:0}main{padding:0;max-width:none}.card,.stat{box-shadow:none}.report-head h2{font-size:20px}.report-table th,.report-table td{font-size:10px}}
+
+/* Ajuste de panel: mantener la distribución y limitar el contenido al viewport */
+@media (min-width: 1001px) {
+  html, body { height:100%; overflow:hidden; }
+  .app { height:100vh; min-height:0; overflow:hidden; }
+  .layout { height:calc(100vh - 70px); min-height:0; overflow:hidden; }
+  aside { min-height:0; overflow-y:auto; }
+  main:has(.stats) { height:calc(100vh - 70px); min-height:0; overflow:hidden; display:flex; flex-direction:column; padding-top:22px; padding-bottom:16px; }
+  main:has(.stats) .pagehead { flex:0 0 auto; margin-bottom:14px; }
+  main:has(.stats) .stats { flex:0 0 auto; margin-bottom:14px; gap:12px; }
+  main:has(.stats) .stat { padding:14px 16px; min-height:135px; }
+  main:has(.stats) .stat strong { font-size:27px; margin-top:7px; }
+  main:has(.stats) .two-col { flex:1 1 0; min-height:0; overflow:hidden; gap:14px; }
+  main:has(.stats) .two-col > .card { min-height:0; height:100%; overflow-y:auto; overscroll-behavior:contain; margin-bottom:0; padding:18px; scrollbar-gutter:stable; }
+  main:has(.stats) .two-col .stack { min-height:0; }
+  main:has(.stats) .calendar-grid { gap:4px; }
+  main:has(.stats) .calendar-day { min-height:42px; padding:5px; }
+  main:has(.stats) .chart-bars { height:130px; }
+}
+@media (max-height:760px) and (min-width:1001px) {
+  main:has(.stats) { padding-top:14px; }
+  main:has(.stats) .pagehead h2 { font-size:24px; }
+  main:has(.stats) .pagehead { margin-bottom:10px; }
+  main:has(.stats) .stat { min-height:112px; padding:10px 14px; }
+  main:has(.stats) .stat strong { font-size:24px; margin-top:4px; }
+  main:has(.stats) .stat small { font-size:11px; }
+  main:has(.stats) .two-col > .card { padding:14px; }
+  main:has(.stats) .calendar-day { min-height:34px; }
+}
+
+/* Panel rector: tarjetas con altura fija y desplazamiento interno cuando hay más contenido */
+@media (min-width:1001px){
+  main:has(.stats) .grid.two-col + .grid{flex:0 0 168px;min-height:0;height:168px;margin-top:16px;overflow:hidden}
+  main:has(.stats) .grid.two-col + .grid > .card{height:100%;min-height:0;max-height:100%;overflow-y:auto;overscroll-behavior:contain;margin:0;scrollbar-gutter:stable}
+  main:has(.stats) .two-col > .card{overflow-y:auto}
+  main:has(.stats) .two-col .stack{overflow-y:auto;max-height:100%}
+  main:has(.stats) .grid.two-col + .grid .stack{min-height:0}
+}
+@media (max-height:760px) and (min-width:1001px){
+  main:has(.stats) .grid.two-col + .grid{flex-basis:145px;height:145px}
+}
+
+/* Corrección: la barra de desplazamiento debe quedar recortada dentro del borde redondeado de cada tarjeta */
+@media (min-width:1001px){
+  main:has(.stats) .two-col > .card,
+  main:has(.stats) .grid.two-col + .grid > .card {
+    overflow-x:hidden !important;
+    scrollbar-width:thin;
+    scrollbar-color:#9aa0a6 transparent;
+    clip-path:inset(0 round var(--radius));
+    padding-right:22px;
+  }
+  main:has(.stats) .two-col > .card::-webkit-scrollbar,
+  main:has(.stats) .grid.two-col + .grid > .card::-webkit-scrollbar { width:10px; }
+  main:has(.stats) .two-col > .card::-webkit-scrollbar-track,
+  main:has(.stats) .grid.two-col + .grid > .card::-webkit-scrollbar-track { background:transparent; margin:12px 3px; }
+  main:has(.stats) .two-col > .card::-webkit-scrollbar-thumb,
+  main:has(.stats) .grid.two-col + .grid > .card::-webkit-scrollbar-thumb { background:#9aa0a6; border-radius:999px; border:3px solid transparent; background-clip:content-box; }
+}
+
+/* Navegación con desplazamiento automático en TODAS las páginas (rector y docentes).
+   Las páginas largas pueden recorrerse verticalmente sin cortar tablas ni formularios;
+   el panel del rector conserva sus tarjetas fijas y sus desplazamientos internos. */
+@media (min-width:1001px){
+  main:not(:has(.stats)) {
+    height:calc(100vh - 70px);
+    min-height:0;
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+    overscroll-behavior-y:contain;
+    scrollbar-width:thin;
+    scrollbar-color:#9aa0a6 transparent;
+  }
+  main:not(:has(.stats))::-webkit-scrollbar { width:10px; }
+  main:not(:has(.stats))::-webkit-scrollbar-track { background:transparent; margin:8px 2px; }
+  main:not(:has(.stats))::-webkit-scrollbar-thumb { background:#9aa0a6; border-radius:999px; border:3px solid transparent; background-clip:content-box; }
+}
+/* En pantallas pequeñas se permite el desplazamiento normal de toda la página. */
+@media (max-width:1000px){
+  html, body { height:auto; min-height:100%; overflow:auto; }
+  .app, .layout { height:auto; min-height:100vh; overflow:visible; }
+  main { height:auto; min-height:0; overflow:visible; }
+}
+
 </style>
 </head>
 <body>
@@ -48,7 +132,7 @@ body{background-color:#f5f3ec;background-image:url("data:image/svg+xml,%3Csvg xm
 <script>
 (() => {
 'use strict';
-const KEY='muregom_wayuu_demo_v1';
+const KEY='muregom_wayuu_version_anterior_sin_base_v1';
 const DEFAULTS={
  users:[{id:'u-rector',username:'rector',password:'Muregom2026!',name:'Rector institucional',role:'rector',active:true,forceChange:false}],
  students:[], subjects:[], assignments:[], grades:[], dba:[], settings:{year:new Date().getFullYear(),weights:{saber:50,hacer:25,ser:20,auto:5},passing:3.0,periodWeights:[25,25,25,25],school:'Institución Educativa Indígena Murewom Wayuri'}
