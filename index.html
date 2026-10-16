@@ -365,17 +365,16 @@
       document.getElementById('username').focus();
     }
 
-    document.getElementById('headerLogin').addEventListener('click', () => openLogin('rector'));
+    // Modo de revisión: acceso libre a los módulos, sin solicitar usuario ni contraseña.
+    document.getElementById('headerLogin').addEventListener('click', () => showView('home'));
     document.querySelectorAll('[data-role]').forEach(btn => {
-      btn.addEventListener('click', () => openLogin(btn.dataset.role));
+      btn.addEventListener('click', () => openDemoDashboard(btn.dataset.role));
     });
     document.getElementById('backHome').addEventListener('click', () => showView('home'));
 
     loginForm.addEventListener('submit', (event) => {
       event.preventDefault();
-      // This is a UI demo only; it intentionally does not accept or validate credentials.
-      loginMessage.textContent = 'El inicio de sesión real todavía no está conectado. Esta pantalla es un prototipo visual; no uses contraseñas reales.';
-      loginMessage.classList.remove('hidden');
+      openDemoDashboard(selectedRole);
     });
 
     function openDemoDashboard(role) {
@@ -398,12 +397,7 @@
       if (e.key === 'Escape') showView('home');
     });
 
-    // To preview dashboards during UI review, click a role card with Shift.
-    document.querySelectorAll('[data-role]').forEach(btn => {
-      btn.addEventListener('click', (event) => {
-        if (event.shiftKey) openDemoDashboard(btn.dataset.role);
-      });
-    });
+    // Los módulos se abren directamente para facilitar la revisión del prototipo.
   </script>
 </body>
 </html>
