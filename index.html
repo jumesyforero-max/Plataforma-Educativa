@@ -564,6 +564,14 @@ body:has(#loginView:not(.hidden)) #loginView .login-card > p:last-child { margin
  body:has(#loginView:not(.hidden)) #loginView .login-card h2 { margin-top:14px !important; }
 }
 </style>
+
+<style id="rector-profile-users-styles">
+.rector-profile-banner{display:flex;align-items:center;gap:14px;width:100%;box-sizing:border-box;padding:13px 16px;margin:0 0 16px;border:1px solid rgba(128,128,240,.28);border-radius:18px;background:linear-gradient(110deg,rgba(128,128,240,.13),rgba(255,255,255,.78) 58%,rgba(217,199,122,.22));text-align:left;color:#222;cursor:pointer;box-shadow:0 8px 22px rgba(50,45,120,.06)}
+.rector-profile-avatar{width:58px;height:58px;flex:0 0 58px;border-radius:50%;display:grid;place-items:center;overflow:hidden;background:#fff5a8;border:2px solid #F0F02F;color:#5047d9;font-size:23px;font-weight:800}.rector-profile-avatar img{width:100%;height:100%;object-fit:cover}.rector-profile-copy{flex:1;min-width:0}.rector-profile-copy strong{display:block;color:#29238e;font-size:15px}.rector-profile-copy small{display:block;color:#666;margin-top:4px;line-height:1.35}.rector-profile-cta{font-size:12px;color:#5047d9;font-weight:800;white-space:nowrap}
+.profile-modal-backdrop{position:fixed;inset:0;z-index:99999;background:rgba(34,34,34,.38);backdrop-filter:blur(8px);display:grid;place-items:center;padding:18px;box-sizing:border-box}.profile-modal{width:min(650px,100%);max-height:min(90vh,850px);overflow:auto;border:1px solid rgba(255,255,255,.8);border-radius:24px;padding:22px;background:linear-gradient(135deg,rgba(255,255,255,.94),rgba(239,238,255,.94) 68%,rgba(255,250,220,.92));box-shadow:0 24px 80px rgba(34,34,34,.25)}.profile-modal-head{display:flex;align-items:center;justify-content:space-between;gap:12px}.profile-modal-head h2{margin:0;color:#28228f}.profile-modal-close{border:0;border-radius:12px;padding:8px 12px;background:rgba(128,128,240,.16);cursor:pointer;font-size:20px}.profile-details{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:18px}.profile-detail{padding:12px;border:1px solid rgba(128,128,240,.18);border-radius:13px;background:rgba(255,255,255,.7);overflow-wrap:anywhere}.profile-detail small{display:block;color:#666;margin-bottom:4px}.profile-detail strong{color:#222;font-size:14px}.user-record-card{display:flex;gap:13px;align-items:center;padding:12px;border:1px solid rgba(128,128,240,.2);border-radius:15px;background:rgba(255,255,255,.78)}.user-record-card img,.user-record-placeholder{width:48px;height:48px;border-radius:50%;object-fit:cover;flex:0 0 48px}.user-record-placeholder{display:grid;place-items:center;background:#f0f02f;color:#5047d9;font-weight:800}.user-record-card small{display:block;color:#666;margin-top:3px}.user-record-card .btn{margin-left:auto}
+@media(max-width:600px){.rector-profile-banner{padding:10px}.rector-profile-avatar{width:48px;height:48px;flex-basis:48px}.rector-profile-cta{white-space:normal;text-align:right}.profile-details{grid-template-columns:1fr}.profile-modal{padding:16px;border-radius:18px}}
+</style>
+
 </head>
 <body>
   <header class="topbar">
@@ -901,6 +909,7 @@ body:has(#loginView:not(.hidden)) #loginView .login-card > p:last-child { margin
           <div class="portal-main">
             <div class="portal-topline"><div class="portal-school"><div class="portal-emblem">✦</div><div><strong>Institución Educativa Indígena<br>Murewom Wayuri</strong><small>Educación propia · Territorio y comunidad</small></div></div><button class="btn outline small" id="portalBackHome">← Inicio</button></div>
             <div class="portal-welcome"><div><h2>👋 Bienvenido, ${role==='estudiante'?'estudiante':role==='docente'?'docente':'equipo de Rectoría'}</h2><p>Sigamos fortaleciendo la educación propia en nuestra comunidad.</p></div><div class="portal-date">Portal académico<br>Territorio Wamonae</div></div>
+            <button class="rector-profile-banner" id="openRectorProfile" type="button" aria-label="Consultar información del rector"><span class="rector-profile-avatar" id="rectorBannerAvatar">✦</span><span class="rector-profile-copy"><strong id="rectorBannerName">Información del rector</strong><small id="rectorBannerTitle">Perfil institucional · Haz clic para consultar los datos</small></span><span class="rector-profile-cta">Ver información →</span></button>
             <div class="portal-columns"><div>
               <div class="portal-stats"><div class="portal-stat"><div class="portal-stat-icon">♧</div><div><b>—</b><small>Estudiantes</small></div></div><div class="portal-stat"><div class="portal-stat-icon">▤</div><div><b>—</b><small>Áreas académicas</small></div></div><div class="portal-stat"><div class="portal-stat-icon">♙</div><div><b>—</b><small>Docentes</small></div></div></div>
               <div class="portal-section-heading"><h3>${role==='estudiante'?'Mis cursos':role==='docente'?'Mis clases y áreas':'Gestión académica'}</h3><button class="portal-link" data-portal-nav="${role==='rector'?'Áreas académicas':role==='docente'?'Mis clases y horarios':'Mis cursos'}">${role==='rector'?'Ver áreas →':role==='docente'?'Ver asignaciones →':'Ver todos →'}</button></div>
@@ -924,6 +933,12 @@ body:has(#loginView:not(.hidden)) #loginView .login-card > p:last-child { margin
           </div>
         </div>`;
       document.getElementById('dashContent').innerHTML = portal + '<details class="panel" style="margin-top:20px"><summary style="cursor:pointer;font-weight:800;color:#28228f">Explorar herramientas del módulo</summary><div style="padding-top:16px">' + details.content + '</div></details>';
+      const portalMain=document.querySelector('#dashContent .portal-main');
+      const portalTopline=portalMain && portalMain.querySelector('.portal-topline');
+      if(portalMain && portalTopline){
+        const pageContent=document.createElement('div'); pageContent.className='portal-page-content';
+        let node=portalTopline.nextSibling; while(node){const next=node.nextSibling;pageContent.appendChild(node);node=next;} portalMain.appendChild(pageContent);
+      }
       const sidebarToggle=document.getElementById('portalSidebarToggle');
       sidebarToggle.addEventListener('click',()=>{
         const shell=sidebarToggle.closest('.portal-shell');
@@ -933,6 +948,8 @@ body:has(#loginView:not(.hidden)) #loginView .login-card > p:last-child { margin
         sidebarToggle.setAttribute('aria-expanded',String(!collapsed));
       });
       document.getElementById('portalBackHome').addEventListener('click',()=>showView('home'));
+      refreshRectorBanner();
+      document.getElementById('openRectorProfile').addEventListener('click',()=>openRectorProfileModal());
       document.querySelectorAll('[data-portal-nav]').forEach(btn=>btn.addEventListener('click',()=>{
         document.querySelectorAll('.portal-nav').forEach(n=>n.classList.toggle('active',n===btn));
         const label=btn.dataset.portalNav;
@@ -971,6 +988,40 @@ body:has(#loginView:not(.hidden)) #loginView .login-card > p:last-child { margin
       'Mi información': {intro:'Vista de ejemplo de la información académica personal del estudiante.',fields:[['Nombre del estudiante','text','Nombre completo'],['Grado oficial','select',['Transición','1','2','3','4','5','6','7','8','9','10','11']],['Grupo multigrado','text','Grupo asignado']],button:'Consultar vista previa'}
     };
 
+    const rectorProfileKey = 'murewomRectorProfileDemo';
+    const teacherRecordsKey = 'murewomTeacherRecordsDemo';
+    function readDemoJSON(key, fallback){ try { const value=localStorage.getItem(key); return value?JSON.parse(value):fallback; } catch(e){ return fallback; } }
+    function safeText(value){ return String(value||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+    function refreshRectorBanner(){
+      const profile=readDemoJSON(rectorProfileKey,{});
+      const name=document.getElementById('rectorBannerName'); const title=document.getElementById('rectorBannerTitle'); const avatar=document.getElementById('rectorBannerAvatar');
+      if(!name||!title||!avatar)return;
+      name.textContent=profile.name||'Información del rector';
+      title.textContent=profile.title||'Perfil institucional · Haz clic para consultar los datos';
+      avatar.innerHTML=profile.photo?'<img alt="Foto del rector" src="'+profile.photo+'">':'✦';
+    }
+    function openRectorProfileModal(){
+      const p=readDemoJSON(rectorProfileKey,{});
+      const canEdit=selectedRole==='rector';
+      const fields=[['Nombre completo','name'],['Número de documento','document'],['Ocupación','occupation'],['Título académico','title'],['Edad','age'],['Correo electrónico personal','email'],['Número de teléfono','phone']];
+      const backdrop=document.createElement('div');backdrop.className='profile-modal-backdrop';backdrop.id='rectorProfileModal';
+      backdrop.innerHTML='<section class="profile-modal" role="dialog" aria-modal="true" aria-labelledby="rectorProfileModalTitle"><div class="profile-modal-head"><h2 id="rectorProfileModalTitle">Información del rector</h2><button class="profile-modal-close" type="button" id="closeRectorProfile" aria-label="Cerrar">×</button></div><p style="color:#666;line-height:1.5">'+(canEdit?'Como Rectoría puedes actualizar los datos de perfil en esta demostración.':'Información institucional del rector.')+'</p>'+
+        (p.photo?'<div style="display:flex;justify-content:center;margin:12px"><img src="'+p.photo+'" alt="Foto del rector" style="width:96px;height:96px;object-fit:cover;border-radius:50%;border:3px solid #F0F02F"></div>':'')+
+        (canEdit?'<form id="rectorProfileForm" class="demo-form">'+fields.map(([label,key])=>'<label>'+label+'<input name="'+key+'" '+(key==='age'?'type="number" min="18" max="100"':'type="text"')+' value="'+safeText(p[key]||'')+'" placeholder="'+label+'"></label>').join('')+'<label>Foto de perfil<input name="photo" id="rectorPhotoInput" type="file" accept="image/*"></label></form><div id="rectorPhotoPreview" style="margin-top:8px"></div><p class="demo-help">Datos de demostración guardados únicamente en este navegador; no se envían a un servidor.</p><div class="demo-actions"><button class="btn" id="saveRectorProfile" type="button">Guardar información</button><button class="btn secondary" id="cancelRectorProfile" type="button">Cerrar</button></div>':'<div class="profile-details">'+fields.map(([label,key])=>'<div class="profile-detail"><small>'+label+'</small><strong>'+(p[key]?safeText(p[key]):'No registrado')+'</strong></div>').join('')+'</div><div class="demo-actions"><button class="btn secondary" id="cancelRectorProfile" type="button">Cerrar</button></div>')+'</section>';
+      document.body.appendChild(backdrop);
+      const close=()=>backdrop.remove();document.getElementById('closeRectorProfile').addEventListener('click',close);document.getElementById('cancelRectorProfile').addEventListener('click',close);backdrop.addEventListener('click',e=>{if(e.target===backdrop)close()});
+      if(canEdit){let photoData=p.photo||'';const input=document.getElementById('rectorPhotoInput');input.addEventListener('change',()=>{const file=input.files&&input.files[0];if(!file)return;const reader=new FileReader();reader.onload=()=>{photoData=reader.result;document.getElementById('rectorPhotoPreview').innerHTML='<img alt="Vista previa de foto" src="'+photoData+'" style="width:76px;height:76px;object-fit:cover;border-radius:50%;border:2px solid #F0F02F">'};reader.readAsDataURL(file)});document.getElementById('saveRectorProfile').addEventListener('click',()=>{const form=document.getElementById('rectorProfileForm');const data={};fields.forEach(([label,key])=>data[key]=form.elements[key].value.trim());data.photo=photoData;localStorage.setItem(rectorProfileKey,JSON.stringify(data));refreshRectorBanner();close()})}
+    }
+    function openUsersManagement(){
+      const host=document.querySelector('#dashContent .portal-page-content') || document.getElementById('dashContent');
+      if(selectedRole!=='rector'){host.innerHTML='<section class="demo-subpage"><h2>Acceso restringido</h2><p>Solo Rectoría puede crear o modificar los registros de usuarios.</p><div class="demo-actions"><button class="btn secondary" id="demoBack" type="button">← Volver al panel</button></div></section>';document.getElementById('demoBack').addEventListener('click',()=>openDemoDashboard(selectedRole));return;}
+      host.innerHTML='<section class="demo-subpage"><div class="eyebrow">ADMINISTRACIÓN INSTITUCIONAL</div><h2>Gestión de usuarios docentes</h2><p>Registra la información del docente, sus asignaturas y sus datos de contacto. Solo Rectoría puede administrar estos registros.</p><p class="demo-help">Demostración: los registros se conservan en este navegador y no constituyen una base de datos oficial.</p><form id="teacherUserForm" class="demo-form"><label>Nombre completo<input name="name" required placeholder="Nombre y apellidos"></label><label>Área académica<input name="area" required placeholder="Ej. Matemáticas"></label><label>Materia o asignatura<input name="subject" required placeholder="Ej. Álgebra"></label><label>Título académico<input name="degree" required placeholder="Ej. Licenciatura en Matemáticas"></label><label>Número de teléfono<input name="phone" type="tel" placeholder="Teléfono de contacto"></label><label>Correo electrónico<input name="email" type="email" required placeholder="docente@correo.com"></label><label>Foto de perfil<input name="photo" id="teacherPhotoInput" type="file" accept="image/*"></label></form><div id="teacherPhotoPreview" style="margin-top:10px"></div><div class="demo-actions"><button class="btn" type="button" id="saveTeacherUser">Registrar docente</button><button class="btn secondary" type="button" id="demoBack">Volver al panel</button></div><h3 style="margin-top:24px;color:#29238e">Docentes registrados</h3><div id="teacherUserList" class="demo-list"></div></section>';
+      let photoData='';const fileInput=document.getElementById('teacherPhotoInput');fileInput.addEventListener('change',()=>{const file=fileInput.files&&fileInput.files[0];if(!file)return;const reader=new FileReader();reader.onload=()=>{photoData=reader.result;document.getElementById('teacherPhotoPreview').innerHTML='<img src="'+photoData+'" alt="Vista previa" style="width:72px;height:72px;border-radius:50%;object-fit:cover;border:2px solid #F0F02F">'};reader.readAsDataURL(file)});
+      const renderList=()=>{const list=document.getElementById('teacherUserList');const rows=readDemoJSON(teacherRecordsKey,[]);list.innerHTML=rows.length?rows.map((u,i)=>'<div class="user-record-card">'+(u.photo?'<img src="'+u.photo+'" alt="Foto de '+safeText(u.name)+'">':'<span class="user-record-placeholder">'+safeText((u.name||'D').trim().charAt(0).toUpperCase())+'</span>')+'<div style="min-width:0;flex:1"><strong>'+safeText(u.name)+'</strong><small>'+safeText(u.area)+' · '+safeText(u.subject)+'</small><small>'+safeText(u.degree)+' · '+safeText(u.email)+'</small><small>'+safeText(u.phone||'Teléfono no registrado')+'</small></div><button class="btn secondary" type="button" data-remove-teacher="'+i+'">Eliminar</button></div>').join(''):'<p>Aún no hay docentes registrados en esta demostración.</p>';list.querySelectorAll('[data-remove-teacher]').forEach(btn=>btn.addEventListener('click',()=>{const rows=readDemoJSON(teacherRecordsKey,[]);rows.splice(Number(btn.dataset.removeTeacher),1);localStorage.setItem(teacherRecordsKey,JSON.stringify(rows));renderList()}))};
+      document.getElementById('saveTeacherUser').addEventListener('click',()=>{const form=document.getElementById('teacherUserForm');if(!form.reportValidity())return;const data={};['name','area','subject','degree','phone','email'].forEach(k=>data[k]=form.elements[k].value.trim());data.photo=photoData;const rows=readDemoJSON(teacherRecordsKey,[]);rows.push(data);localStorage.setItem(teacherRecordsKey,JSON.stringify(rows));form.reset();photoData='';document.getElementById('teacherPhotoPreview').innerHTML='';renderList()});
+      document.getElementById('demoBack').addEventListener('click',()=>openDemoDashboard(selectedRole));renderList();
+    }
+
     function openDemoSection(name){
       const allowedByRole = {
         rector: ['Usuarios','Horarios','Evaluación','Seguimiento','Informes','Estudiantes','Docentes','Áreas académicas','Cursos','Configuración','Documentos','Actividades','Asistencia','Calificaciones','Observaciones'],
@@ -979,7 +1030,8 @@ body:has(#loginView:not(.hidden)) #loginView .login-card > p:last-child { margin
       };
       const aliases = {'Mis clases y horarios':'Horario','Mis áreas académicas':'Áreas académicas','Mis cursos':'Cursos','Mis calificaciones':'Calificaciones','Mis actividades':'Actividades','Mi asistencia y calendario':'Horario','Mi seguimiento':'Seguimiento','Planeaciones y DBA':'Documentos','Actividades y guías':'Actividades','Informes y boletines':'Informes','Gestión curricular':'Documentos','Mi información':'Mi información','Mis estudiantes':'Estudiantes','Docentes':'Seguimiento','Gestión académica':'Áreas académicas'};
       name = aliases[name] || name;
-      const host=document.getElementById('dashContent');
+      const host=document.querySelector('#dashContent .portal-page-content') || document.getElementById('dashContent');
+      if(name==='Usuarios'){openUsersManagement();window.scrollTo({top:0,behavior:'smooth'});return;}
       if(!(allowedByRole[selectedRole]||[]).includes(name)){
         host.innerHTML = `<section class="demo-subpage"><div class="eyebrow">MÓDULO ${roleDetails[selectedRole].label}</div><h2>Acceso no disponible</h2><p>Esta opción no está habilitada para el perfil actual.</p><div class="demo-actions"><button class="btn secondary" id="demoBack" type="button">← Volver al panel</button></div></section>`;
         document.getElementById('demoBack').addEventListener('click',()=>openDemoDashboard(selectedRole));
@@ -1099,4 +1151,19 @@ body:has(#loginView:not(.hidden)) main { width:100%!important; max-width:none!im
  #loginView .login-card h2{font-size:22px!important;}
  #loginView .login-card > p:last-child{margin-bottom:12px!important;}
 }
+
+    /* Vista institucional a pantalla completa; navegación persistente en todos los apartados */
+    body.in-dashboard { margin:0!important; padding:0!important; min-height:100vh; width:100%; overflow-x:hidden; background:#f7f7ff; }
+    body.in-dashboard > * { max-width:none; }
+    body.in-dashboard main, body.in-dashboard #dashboardView { width:100%!important; max-width:none!important; margin:0!important; padding:0!important; border:0!important; border-radius:0!important; box-shadow:none!important; min-height:100vh; background:transparent!important; }
+    body.in-dashboard .dashboard-head, body.in-dashboard #dashboardView > .notice, body.in-dashboard .footer { display:none!important; }
+    body.in-dashboard #dashContent { width:100%; margin:0; padding:0; }
+    body.in-dashboard .portal-shell { width:100%; max-width:none; min-height:100vh; margin:0; border:0; border-radius:0; box-shadow:none; grid-template-columns:250px minmax(0,1fr); overflow:visible; }
+    body.in-dashboard .portal-sidebar { position:sticky; top:0; align-self:start; height:100vh; min-height:100vh; overflow-y:auto; border-radius:0; }
+    body.in-dashboard .portal-main { min-width:0; padding:0 24px 28px; }
+    body.in-dashboard .portal-topline { position:sticky; top:0; z-index:20; margin:0 -24px 20px; padding:16px 24px; background:rgba(248,248,255,.92); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); }
+    body.in-dashboard .portal-page-content { min-width:0; }
+    body.in-dashboard .portal-page-content > .demo-subpage { width:100%; max-width:none; }
+    @media(max-width:1000px){body.in-dashboard .portal-shell{grid-template-columns:220px minmax(0,1fr)}}
+    @media(max-width:650px){body.in-dashboard .portal-shell,body.in-dashboard .portal-shell.sidebar-collapsed{grid-template-columns:78px minmax(0,1fr);align-items:stretch}body.in-dashboard .portal-sidebar{display:flex;position:sticky;top:0;height:100vh;min-height:100vh;padding:12px 7px;gap:7px}body.in-dashboard .portal-seal{width:42px;height:42px;margin:5px auto 12px}body.in-dashboard .portal-sidebar-note,body.in-dashboard .portal-landscape-mini{display:none}body.in-dashboard .portal-nav{display:flex;flex-direction:column;justify-content:center;gap:3px;padding:10px 3px;font-size:9px;text-align:center}body.in-dashboard .portal-nav .nav-label{display:none}body.in-dashboard .portal-main{padding:0 12px 20px}body.in-dashboard .portal-topline{margin:0 -12px 14px;padding:12px;gap:8px}body.in-dashboard .portal-school strong{font-size:14px}body.in-dashboard .portal-school small{font-size:10px}body.in-dashboard .portal-emblem{display:grid;width:34px;height:34px;font-size:16px}}
 </style>
