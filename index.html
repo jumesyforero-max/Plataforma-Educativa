@@ -1209,4 +1209,44 @@ body:has(#loginView:not(.hidden)) main { width:100%!important; max-width:none!im
     body.in-dashboard .portal-page-content > .demo-subpage { width:100%; max-width:none; }
     @media(max-width:1000px){body.in-dashboard .portal-shell{grid-template-columns:220px minmax(0,1fr)}}
     @media(max-width:650px){body.in-dashboard .portal-shell,body.in-dashboard .portal-shell.sidebar-collapsed{grid-template-columns:78px minmax(0,1fr);align-items:stretch}body.in-dashboard .portal-sidebar{display:flex;position:sticky;top:0;height:100vh;min-height:100vh;padding:12px 7px;gap:7px}body.in-dashboard .portal-seal{width:42px;height:42px;margin:5px auto 12px}body.in-dashboard .portal-sidebar-note,body.in-dashboard .portal-landscape-mini{display:none}body.in-dashboard .portal-nav{display:flex;flex-direction:column;justify-content:center;gap:3px;padding:10px 3px;font-size:9px;text-align:center}body.in-dashboard .portal-nav .nav-label{display:none}body.in-dashboard .portal-main{padding:0 12px 20px}body.in-dashboard .portal-topline{margin:0 -12px 14px;padding:12px;gap:8px}body.in-dashboard .portal-school strong{font-size:14px}body.in-dashboard .portal-school small{font-size:10px}body.in-dashboard .portal-emblem{display:grid;width:34px;height:34px;font-size:16px}}
+
+/* Corrección de menú superior: compacto, pegado a la barra institucional y adaptable */
+body.in-dashboard .portal-shell,
+body.in-dashboard .portal-shell.sidebar-collapsed{
+  display:flex!important; flex-direction:column!important; width:100%!important; max-width:none!important;
+  min-height:100vh!important; height:auto!important; margin:0!important; padding:0!important;
+  border:0!important; border-radius:0!important; overflow:visible!important; gap:0!important;
+}
+body.in-dashboard .portal-sidebar{
+  order:0!important; position:sticky!important; top:0!important; z-index:30!important;
+  display:flex!important; flex-direction:row!important; align-items:center!important; align-self:stretch!important;
+  width:100%!important; height:auto!important; min-height:0!important; max-height:none!important;
+  box-sizing:border-box!important; padding:7px 12px!important; margin:0!important; gap:5px!important;
+  overflow-x:auto!important; overflow-y:hidden!important; white-space:nowrap!important;
+  border-radius:0!important; box-shadow:none!important; background:#5551d4!important;
+}
+body.in-dashboard .portal-sidebar .portal-sidebar-toggle{flex:0 0 auto!important; padding:7px 10px!important; font-size:13px!important;}
+body.in-dashboard .portal-sidebar .portal-seal{display:none!important;}
+body.in-dashboard .portal-sidebar .portal-nav{
+  flex:0 0 auto!important; display:inline-flex!important; flex-direction:row!important; align-items:center!important;
+  justify-content:center!important; gap:6px!important; padding:8px 11px!important; margin:0!important;
+  min-height:34px!important; height:auto!important; font-size:clamp(11px,0.8vw,13px)!important;
+  line-height:1.2!important; border-radius:10px!important; white-space:nowrap!important;
+  background:transparent!important; color:#fff!important; box-shadow:none!important;
+}
+body.in-dashboard .portal-sidebar .portal-nav span{font-size:14px!important; width:auto!important; min-width:16px!important;}
+body.in-dashboard .portal-sidebar .portal-nav.active{background:#F0F02F!important;color:#24217e!important;}
+body.in-dashboard .portal-sidebar .portal-nav:hover:not(.active){background:rgba(255,255,255,.13)!important;color:#fff!important;}
+body.in-dashboard .portal-sidebar .portal-sidebar-note,
+body.in-dashboard .portal-sidebar .portal-landscape-mini{display:none!important;}
+body.in-dashboard .portal-main{order:1!important;width:100%!important;max-width:none!important;min-width:0!important;box-sizing:border-box!important;padding:0 clamp(12px,1.5vw,24px) 28px!important;}
+body.in-dashboard .portal-topline{position:sticky!important;top:48px!important;z-index:20!important;margin:0 calc(-1 * clamp(12px,1.5vw,24px)) 18px!important;padding:12px clamp(12px,1.5vw,24px)!important;}
+body.in-dashboard .portal-page-content,body.in-dashboard .portal-page-content > .demo-subpage{width:100%!important;max-width:none!important;min-width:0!important;}
+@media(max-width:700px){
+ body.in-dashboard .portal-sidebar{padding:6px 8px!important;gap:4px!important;}
+ body.in-dashboard .portal-sidebar .portal-nav{font-size:11px!important;padding:8px 9px!important;}
+ body.in-dashboard .portal-sidebar .portal-nav span{font-size:13px!important;}
+ body.in-dashboard .portal-topline{top:43px!important;}
+ body.in-dashboard .portal-main{padding-left:10px!important;padding-right:10px!important;}
+}
 </style>
