@@ -1,5 +1,5 @@
-Murewom Wayuri - Estado de notas por grado
+Murewom Wayuri - Seguimiento de solicitudes de modificación
 
-El panel del rector muestra el estado de las notas por estudiante, grado, docente, asignatura y periodo. La vista es de seguimiento y no incluye un botón para verificar individualmente las calificaciones. La autorización o rechazo de solicitudes de modificación se conserva como un proceso separado.
+Abra index.html en el navegador. En el panel de rectoría > Estado de notas por grado encontrará una tabla adicional con las solicitudes de modificación, el motivo, el estado y los botones Autorizar edición / No autorizar. El botón Ver conversación abre el módulo Mensajes.
 
-Esta versión de demostración guarda datos localmente en el navegador; no sincroniza automáticamente entre dispositivos.
+Esta es una versión de demostración con almacenamiento local; para compartir solicitudes y decisiones entre dispositivos se necesita autenticación y base de datos centralizada.
