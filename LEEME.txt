@@ -1,9 +1,5 @@
-Murewom Wayuri — Informes con impresión restringida
+Murewom Wayuri - Permisos de informes por grado
 
-Cambios:
-- Los docentes pueden visualizar informes individuales, pero no ven botones para imprimir ni guardar PDF.
-- El rector conserva la opción de imprimir o guardar informes individuales en PDF.
-- La impresión de informes de todo un grado también está reservada al rector.
-- Se agregaron verificaciones en las funciones de impresión para impedir que un docente invoque directamente esas acciones desde la interfaz.
+El rector puede consultar informes de todos los grados. Los docentes solo pueden consultar informes de estudiantes de los grados que tengan asignados por el rector. La verificación se aplica tanto al listado por grado como a la apertura del informe individual.
 
-Nota: esta plataforma sigue usando el modelo de autenticación y almacenamiento local de la versión base.
+Esta es una versión de demostración con almacenamiento local en el navegador. Para garantizar permisos entre distintos dispositivos, se requiere autenticación y base de datos compartida en servidor.
