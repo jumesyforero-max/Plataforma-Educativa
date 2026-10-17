@@ -1,3 +1,11 @@
-Murewom Wayuri - reparación de paneles
+Murewom Wayuri — Ajustes módulo de rectoría
 
-Abra index.html en el navegador. La versión incluye control de errores de renderizado y normalización de colecciones guardadas para evitar que un panel quede completamente en blanco. Si el navegador ya tenía datos locales, se conservan; no borre el almacenamiento del navegador sin exportar una copia de seguridad.
+Incluye:
+- Registro de docentes sin asignación de asignaturas dentro del formulario de docente.
+- Selección de uno o varios docentes al crear/editar una asignatura.
+- Botón para actualizar las solicitudes de modificación de notas en Seguimiento docente.
+- La bandeja de solicitudes muestra solo las solicitudes pendientes; al autorizar o rechazar desaparecen de esa bandeja.
+- Las solicitudes de modificación de notas no generan notificaciones; se gestionan en Seguimiento docente y la conversación se mantiene en Mensajes.
+- Respuestas con referencia al hilo para mostrar la conversación secuencial.
+
+Nota: esta es una demostración local. No sincroniza en tiempo real entre dispositivos o navegadores; para ello se requiere backend y base de datos compartida.
