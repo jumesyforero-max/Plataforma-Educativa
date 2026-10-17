@@ -1,5 +1,5 @@
-Murewom Wayuri - Permisos de informes por grado
+Murewom Wayuri - Estado de notas por grado
 
-El rector puede consultar informes de todos los grados. Los docentes solo pueden consultar informes de estudiantes de los grados que tengan asignados por el rector. La verificación se aplica tanto al listado por grado como a la apertura del informe individual.
+El panel del rector muestra el estado de las notas por estudiante, grado, docente, asignatura y periodo. La vista es de seguimiento y no incluye un botón para verificar individualmente las calificaciones. La autorización o rechazo de solicitudes de modificación se conserva como un proceso separado.
 
-Esta es una versión de demostración con almacenamiento local en el navegador. Para garantizar permisos entre distintos dispositivos, se requiere autenticación y base de datos compartida en servidor.
+Esta versión de demostración guarda datos localmente en el navegador; no sincroniza automáticamente entre dispositivos.
