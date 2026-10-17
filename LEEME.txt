@@ -1,9 +1,10 @@
-Murewom Wayuri - Ajustes de seguimiento académico
+Murewom Wayuri - ajustes de navegación y seguimiento
 
-Cambios:
-- Incluye Jardín en el selector y en el resumen de seguimiento por grado.
-- Se elimina el botón superior de Notificaciones; Mensajes y Ayuda permanecen.
-- Seguimiento docente inicia con tarjetas por grado; al seleccionar un grado se muestran sus estudiantes y el estado de notas del periodo seleccionado.
-- Se normaliza la comparación de identificadores de asignación al consultar envíos para que los estados enviados a rectoría se detecten aunque los IDs tengan distinto tipo.
+Cambios incluidos:
+- Barra superior fija y menú lateral estático durante el desplazamiento (en pantallas amplias).
+- En Estudiantes, el filtro Grado aparece antes de Buscar estudiante.
+- El módulo y el menú ahora se llaman Asignaturas; se eliminó la columna de DBA registrados.
+- Corregida la delegación de eventos para que las tarjetas de grado y el botón Volver a grados funcionen en Seguimiento docente aunque el contenido se vuelva a renderizar.
+- Búsqueda más robusta del estado de envío por identificador de asignación.
 
-Nota: esta versión conserva almacenamiento local del navegador y no sincroniza automáticamente datos entre dispositivos.
+La aplicación continúa siendo una demostración con almacenamiento local del navegador.
