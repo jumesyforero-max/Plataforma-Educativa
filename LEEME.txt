@@ -1,11 +1,9 @@
-Murewom Wayuri - Corrección de solicitudes de modificación de notas
-
-Abra index.html en el navegador para probar la versión actualizada.
+Murewom Wayuri - Ajustes de seguimiento académico
 
 Cambios:
-- Las solicitudes de edición se guardan en una lista específica y también como mensajes de conversación.
-- El seguimiento de rectoría reúne solicitudes guardadas y solicitudes presentes en Mensajes.
-- El rector puede autorizar o rechazar solicitudes desde el seguimiento docente.
-- La decisión se sincroniza en los registros locales de solicitud y mensaje.
+- Incluye Jardín en el selector y en el resumen de seguimiento por grado.
+- Se elimina el botón superior de Notificaciones; Mensajes y Ayuda permanecen.
+- Seguimiento docente inicia con tarjetas por grado; al seleccionar un grado se muestran sus estudiantes y el estado de notas del periodo seleccionado.
+- Se normaliza la comparación de identificadores de asignación al consultar envíos para que los estados enviados a rectoría se detecten aunque los IDs tengan distinto tipo.
 
-Nota: esta versión conserva almacenamiento local del navegador. No sincroniza información entre dispositivos o navegadores diferentes; para eso se requiere una base de datos central y autenticación compartida.
+Nota: esta versión conserva almacenamiento local del navegador y no sincroniza automáticamente datos entre dispositivos.
