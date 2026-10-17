@@ -1,5 +1,11 @@
-Murewom Wayuri - Seguimiento de solicitudes de modificación
+Murewom Wayuri - Corrección de solicitudes de modificación de notas
 
-Abra index.html en el navegador. En el panel de rectoría > Estado de notas por grado encontrará una tabla adicional con las solicitudes de modificación, el motivo, el estado y los botones Autorizar edición / No autorizar. El botón Ver conversación abre el módulo Mensajes.
+Abra index.html en el navegador para probar la versión actualizada.
 
-Esta es una versión de demostración con almacenamiento local; para compartir solicitudes y decisiones entre dispositivos se necesita autenticación y base de datos centralizada.
+Cambios:
+- Las solicitudes de edición se guardan en una lista específica y también como mensajes de conversación.
+- El seguimiento de rectoría reúne solicitudes guardadas y solicitudes presentes en Mensajes.
+- El rector puede autorizar o rechazar solicitudes desde el seguimiento docente.
+- La decisión se sincroniza en los registros locales de solicitud y mensaje.
+
+Nota: esta versión conserva almacenamiento local del navegador. No sincroniza información entre dispositivos o navegadores diferentes; para eso se requiere una base de datos central y autenticación compartida.
