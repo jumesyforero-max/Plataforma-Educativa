@@ -1,10 +1,7 @@
-Murewom Wayuri - ajustes de navegación y seguimiento
+Murewom Wayuri — actualización de asignaturas, seguimiento y navegación
 
-Cambios incluidos:
-- Barra superior fija y menú lateral estático durante el desplazamiento (en pantallas amplias).
-- En Estudiantes, el filtro Grado aparece antes de Buscar estudiante.
-- El módulo y el menú ahora se llaman Asignaturas; se eliminó la columna de DBA registrados.
-- Corregida la delegación de eventos para que las tarjetas de grado y el botón Volver a grados funcionen en Seguimiento docente aunque el contenido se vuelva a renderizar.
-- Búsqueda más robusta del estado de envío por identificador de asignación.
+- Permite registrar varias áreas dentro de una asignatura en cada asignación (separadas por comas; ejemplo: Trigonometría, Cálculo, Proyectos).
+- Mantiene fija la barra superior y el menú institucional; el área principal es la que se desplaza.
+- Corrige el manejo de selección de grado en Seguimiento docente para mostrar la tabla del grado seleccionado y permitir volver al listado.
 
-La aplicación continúa siendo una demostración con almacenamiento local del navegador.
+Abrir index.html en el navegador. Esta versión sigue utilizando almacenamiento local y no sincroniza datos entre dispositivos.
