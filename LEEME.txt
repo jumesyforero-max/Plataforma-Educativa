@@ -1,7 +1,3 @@
-Murewom Wayuri — actualización de asignaturas, seguimiento y navegación
+Murewom Wayuri - reparación de paneles
 
-- Permite registrar varias áreas dentro de una asignatura en cada asignación (separadas por comas; ejemplo: Trigonometría, Cálculo, Proyectos).
-- Mantiene fija la barra superior y el menú institucional; el área principal es la que se desplaza.
-- Corrige el manejo de selección de grado en Seguimiento docente para mostrar la tabla del grado seleccionado y permitir volver al listado.
-
-Abrir index.html en el navegador. Esta versión sigue utilizando almacenamiento local y no sincroniza datos entre dispositivos.
+Abra index.html en el navegador. La versión incluye control de errores de renderizado y normalización de colecciones guardadas para evitar que un panel quede completamente en blanco. Si el navegador ya tenía datos locales, se conservan; no borre el almacenamiento del navegador sin exportar una copia de seguridad.
